@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import styles from '../../styles/Home.module.css'
 import Footer from '../ui/components/Footer'
@@ -6,14 +6,35 @@ import Header from '../ui/components/Header'
 import Nav from '../ui/components/Nav'
 import Link from 'next/link'
 import News from '../ui/components/NewsItem'
-import { fakeNews, NewsAPIObject } from '../utils'
-const articles: NewsAPIObject[] = fakeNews
+import { NewsAPIObject } from '../utils'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { getArticles, selectArticles } from '../store/slice/articleSlice'
 
 const Home: NextPage = () => {
+  const dispatch = useAppDispatch()
+  const { articles, error, error_code } = useAppSelector(selectArticles)
   const [messageTitle, setMessageTitle] = useState('Latest updates')
 
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(getArticles())
+    setMessageTitle('Loading...')
+
+    if (error || articles.length == 0) {
+      if (error_code === 'HeadersWithoutKey') {
+        setMessageTitle('No API key provided to fetch News 🧩 ')
+      } else if (error_code === 'ConcurrencyViolation' && articles.length == 0) {
+        setMessageTitle('API Error Wait and then refresh ⛳️')
+      } else {
+        setMessageTitle('Latest updates')
+      }
+    } else {
+      setMessageTitle('Latest updates')
+    }
+  }, [articles, dispatch, error_code, error])
+
   return (
-    <div className={[styles.container, 'flex', 'flex-col'].join(' ')}>
+    <div className={[styles.container, 'flex', 'flex-col', 'scrollbar-hide'].join(' ')}>
       <Header />
       <Nav />
 
@@ -52,9 +73,9 @@ const Home: NextPage = () => {
         </div>
       )}
 
-      {/* {error && (
+      {error && (
         <div className="flex font-mono font-bold text-md mx-auto w-10/12 justify-center mt-36"> {messageTitle}</div>
-      )} */}
+      )}
 
       <Footer />
     </div>

@@ -1,5 +1,5 @@
 {
-  "name": "foxnews-nextjs-aws",
+  "name": "news-nextjs-aws",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,6 +14,7 @@
     "react-dom": "18.1.0"
   },
   "devDependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@types/node": "17.0.38",
     "@types/react": "18.0.10",
@@ -22,7 +23,11 @@
     "eslint": "8.16.0",
     "eslint-config-next": "12.1.6",
     "moment": "^2.29.4",
+    "next-redux-wrapper": "^8.1.0",
     "postcss": "^8.4.21",
+    "react-redux": "^8.0.5",
+    "redux-persist": "^6.0.0",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "^3.2.7",
     "typescript": "4.7.2"
   }

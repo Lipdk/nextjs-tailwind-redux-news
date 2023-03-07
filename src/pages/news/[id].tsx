@@ -1,19 +1,21 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { fakeNews, NewsAPIObject } from '../../utils'
+import { NewsAPIObject } from '../../utils'
 import Header from '../../ui/components/Header'
 import Nav from '../../ui/components/Nav'
 import News from '../../ui/components/NewsItem'
 import Link from 'next/link'
 import PaginationBottom from '../../ui/components/PaginationBottom'
-
-const articles: NewsAPIObject[] = fakeNews
+// const articles: NewsAPIObject[] = fakeNews
+import { useAppSelector } from '../../store/hooks'
+import { selectArticles } from '../../store/slice/articleSlice'
 
 interface IQueryParam {
   id: string
 }
 
 const NewsItem = () => {
+  const { articles } = useAppSelector(selectArticles)
   const router = useRouter()
   const { id } = router.query as unknown as IQueryParam
 

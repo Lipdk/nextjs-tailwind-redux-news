@@ -66,3 +66,5 @@ export const fakeNews = [
     _id: 'f54468ea81e6026241e6af6b2bb07848'
   }
 ]
+
+export const NEWS_API_URL = 'https://api.newscatcherapi.com/v2/search?q='
